@@ -11,9 +11,8 @@ module.exports = passport => {
       {
         clientID: googleClientID,
         clientSecret: googleClientSecret,
-        callbackURL: `https://localhost:${
-          process.env.PORT
-        }/auth/google/callback`
+        callbackURL: `auth/google/callback`,
+        proxy: true
       },
       (accessToken, refreshToken, profile, done) => {
         console.log({ accessToken, profile });
