@@ -11,6 +11,10 @@
 /dist
 /.next
 
+# development
+# /pages
+# /components
+
 # misc
 .DS_Store
 .env
