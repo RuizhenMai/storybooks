@@ -9,10 +9,23 @@ router.get(
 
 router.get(
   "/google/callback",
-  passport.authenticate("google", { failureRedirect: "/" }),
+  passport.authenticate("google", {
+    failureRedirect: "/"
+  }),
   (req, res) => {
-    res.redirect("/dashboard");
+    console.log("success");
+    console.log(req.user);
+    return res.redirect("/");
   }
 );
+
+router.get("/logout", (req, res) => {
+  req.logout();
+  res.redirect("/");
+});
+
+router.get("/verify", (req, res) => {
+  res.json({ user: res.locals.user });
+});
 
 module.exports = router;
