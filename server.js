@@ -5,6 +5,13 @@ const handle = app.getRequestHandler();
 
 const PORT = process.env.PORT || 3000;
 
+// Passport Config
+const passport = require("passport");
+require("./server/config/passport")(passport);
+
+// Load Routes
+const authRoutes = require("./server/routes/auth");
+
 const loadServer = () => {
   const express = require("express");
   const server = express();
@@ -17,6 +24,14 @@ const loadServer = () => {
     const actualPage = "/post";
     const queryParams = { title: req.params.id };
     app.render(req, res, actualPage, queryParams);
+  });
+
+  // Use Routes
+  server.use("/auth", authRoutes);
+
+  // handle the all the rest routes to be 404
+  server.get("*", (req, res) => {
+    return handle(req, res);
   });
 
   server.listen(PORT, err => {
