@@ -73,8 +73,7 @@ login.getInitialProps = async context => {
     if (!IS_SERVER) {
       Router.back();
     }
-    // context.res.redirect(context.req.headers.referer || "/");
-    context.res.redirect("/");
+    context.res.redirect(context.req.headers.referer || "/");
   }
 
   return {};

@@ -10,7 +10,9 @@ const ssrLogin = async context => {
     // return {}; //state change is handle by redux
   } else {
     try {
-      const res = await axios.get("http://localhost:3000/auth/getuser");
+      const res = await axios.get(
+        `http://${window.location.host}/auth/getuser`
+      );
       //   console.log(res.data.user);
       //   console.log(context.store);
       context.store.dispatch(loginUser(res.data.user));

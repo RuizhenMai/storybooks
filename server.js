@@ -81,7 +81,7 @@ const loadServer = () => {
 
   server.get("/about", (req, res) => {
     // if (!req.user) return res.redirect("/");
-    console.log(req.headers.referer);
+    console.log(req.headers);
     app.render(req, res, "/about");
   });
 
