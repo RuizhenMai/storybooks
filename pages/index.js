@@ -25,7 +25,7 @@ class index extends React.Component {
     return (
       <div className="jumbotron">
         <h1 className="display-4">
-          Welcome {this.props.user ? this.props.user.lastName : null}
+          Welcome {this.  props.user ? this.props.user.lastName : null}
         </h1>
         <small> Storybooks 1.0.0</small>
         <p className="lead">

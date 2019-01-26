@@ -72,16 +72,13 @@ const loadServer = () => {
   server.use(cors());
 
   server.use(loadUser);
-
+  server.use(express.static(__dirname + "/node_modules"));
   server.get("/", (req, res) => {
-    console.log(req.headers.referer);
-
     app.render(req, res, "/");
   });
 
   server.get("/about", (req, res) => {
     // if (!req.user) return res.redirect("/");
-    console.log(req.headers);
     app.render(req, res, "/about");
   });
 

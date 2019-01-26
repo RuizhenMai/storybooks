@@ -25,14 +25,14 @@ class Navbar extends React.Component {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
-                <Link href="/">
+                <Link prefetch href="/">
                   <a className="nav-link">
                     <i className="fas fa-home" /> Home
                   </a>
                 </Link>
               </li>
               <li className="nav-item">
-                <Link href="/about">
+                <Link prefetch href="/about">
                   <a className="nav-link">
                     <i className="fas fa-info-circle" /> About
                   </a>
@@ -40,7 +40,7 @@ class Navbar extends React.Component {
               </li>
               {!isAuthenticated ? (
                 <li className="nav-item">
-                  <Link href="/login">
+                  <Link prefetch href="/login">
                     <a className="nav-link">
                       <i className="fas fa-sign-in-alt" /> Login
                     </a>
