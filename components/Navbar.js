@@ -12,7 +12,7 @@ class Navbar extends React.Component {
             <a className="navbar-brand">BRAND</a>
           </Link>
           <button
-            className="navbar-toggler"
+            className="navbar-toggler border-danger"
             type="button"
             data-toggle="collapse"
             data-target="#navbarNav"
