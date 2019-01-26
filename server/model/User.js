@@ -6,8 +6,10 @@ const Schema = mongoose.Schema;
 // insert, delete, find, in short interact with database
 const UserSchema = new Schema({
   googleID: {
-    type: String,
-    required: true
+    type: String
+  },
+  facebookID: {
+    type: String
   },
   email: {
     type: String,
@@ -20,8 +22,7 @@ const UserSchema = new Schema({
     type: String
   },
   image: {
-    type: String,
-    required: true
+    type: String
   },
   date: {
     type: Date,

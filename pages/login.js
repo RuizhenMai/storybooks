@@ -44,9 +44,11 @@ class login extends React.Component {
                   className="btn btn-danger btn-block rounded-0"
                 />
                 <hr />
-                <a className="mb-3 btn btn-block btn-facebook rounded-0 text-white lead">
-                  <i className="fab fa-facebook-f" /> Connect with Facebook
-                </a>
+                <Link href="/auth/facebook">
+                  <a className="mb-3 btn btn-block btn-facebook rounded-0 text-white lead">
+                    <i className="fab fa-facebook-f" /> Connect with Facebook
+                  </a>
+                </Link>
                 <Link href="/auth/google">
                   <a className="btn btn-block btn-light rounded-0">
                     {/* <i className="fab fa-google" style={{ color: "red" }} /> */}
