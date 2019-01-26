@@ -1,17 +1,14 @@
 import React from "react";
-import Layout from "../components/Layout";
-import Link from "next/link";
-
-const about = () => {
-  return (
-    <Layout>
-      <h1>Welcome This is about page</h1>
-    </Layout>
-  );
-};
+import ssrLoginUser from "../utils/ssrLoginUser";
+class about extends React.Component {
+  render() {
+    return <h1>Welcome This is about page</h1>;
+  }
+}
 
 about.getInitialProps = async context => {
-  //   console.log(context);
+  ssrLoginUser(context);
+
   return {};
 };
 

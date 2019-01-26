@@ -2,7 +2,7 @@ const next = require("next");
 const dev = process.env.NODE_ENV !== "production";
 const app = next({ dev });
 const handle = app.getRequestHandler();
-const keys = require("./server/config/keys");
+const { MONGO_URI, SESSION_SECRET } = require("./server/config/keys");
 const PORT = process.env.PORT || 3000;
 
 // Setup User Model
@@ -10,75 +10,83 @@ require("./server/model/User");
 
 // Passport Config
 const passport = require("passport");
-require("./server/config/passport")(passport);
+require("./server/config/passport");
 
 // Load Routes
 const authRoutes = require("./server/routes/auth");
-
-// Mongoose Connect
-const mongoose = require("mongoose");
-mongoose
-  .connect(
-    keys.mongoURI,
-    {
-      useNewUrlParser: true
-    }
-  )
-  .then(() => console.log("> mLab MongoDB Connected"))
-  .catch(console.log);
 
 const loadServer = () => {
   const express = require("express");
   const server = express();
   const session = require("express-session");
-  const MongoDBStore = require("connect-mongodb-session")(session);
+  // const MongoDBStore = require("connect-mongodb-session")(session);
   const TWO_HOUR = 1000 * 60 * 60 * 2;
   const cors = require("cors");
-  const {
-    ensureAuthenticated
-  } = require("./server/middlewares/ensureAuthenticated");
   const { loadUser } = require("./server/middlewares/loadUser");
 
+  // Mongoose Connect
+  const mongoose = require("mongoose");
+  mongoose
+    .connect(
+      MONGO_URI,
+      {
+        useNewUrlParser: true
+      }
+    )
+    .then(() => console.log("> mLab MongoDB Connected"))
+    .catch(console.log);
+
   // Set Session store
-  const store = new MongoDBStore(
-    {
-      uri: keys.mongoURI,
-      collection: "sessions"
-    },
-    () => {
-      console.log("> MongoDB store connected");
-    }
-  );
+  // const store = new MongoDBStore(
+  //   {
+  //     uri: MONGO_URI,
+  //     collection: "sessions"
+  //   },
+  //   () => {
+  //     console.log("> MongoDB store connected");
+  //   }
+  // );
 
-  store.on("error", function(error) {
-    assert.ifError(error);
-    assert.ok(false);
-  });
+  // store.on("error", function(error) {
+  //   assert.ifError(error);
+  //   assert.ok(false);
+  // });
 
+  // Set Session Config
   server.use(
     session({
+      // store: store,
       secret: "secretsssss",
+      rolling: false,
       resave: false,
       saveUninitialized: false,
       cookie: {
-        sameSite: true,
+        sameSite: false,
         maxAge: TWO_HOUR
       }
     })
   );
 
-  server.use(cors());
   server.use(passport.initialize());
   server.use(passport.session());
+  server.use(cors());
 
   server.use(loadUser);
 
   server.get("/", (req, res) => {
-    app.render(req, res, "/", { user: res.locals.user });
+    console.log(req.headers.referer);
+
+    app.render(req, res, "/");
   });
 
   server.get("/about", (req, res) => {
+    // if (!req.user) return res.redirect("/");
+    console.log(req.headers.referer);
     app.render(req, res, "/about");
+  });
+
+  server.get("/verify", passport.authenticate("google"), (req, res) => {
+    res.send(req.user);
   });
 
   server.get("/p/:id", (req, res) => {

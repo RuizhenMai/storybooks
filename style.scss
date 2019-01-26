@@ -1,0 +1,22 @@
+$theme-colors:(
+    "danger": #e8474d,
+    "facebook":#3b5998,
+    
+);
+
+$body-bg: rgb(231, 230, 230);
+
+$jumbotron-bg:#ffffff;
+.jumbotron {
+    box-shadow: 10px 10px 30px rgba(0,0,0,.2);
+}
+
+.navbar {
+    box-shadow: 5px 5px 30px rgba(0,0,0,.2);
+  }
+
+  .card-body{
+    box-shadow: 5px 5px 30px rgba(0,0,0,.2)
+  }
+
+  @import '~bootstrap/scss/bootstrap.scss';

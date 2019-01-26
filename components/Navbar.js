@@ -1,8 +1,10 @@
 import React from "react";
 import Link from "next/link";
+import { connect } from "react-redux";
 
-export default class Navbar extends React.Component {
+class Navbar extends React.Component {
   render() {
+    const { isAuthenticated } = this.props;
     return (
       <nav className="navbar navbar-expand-sm navbar-dark bg-danger mb-3 py-1">
         <div className="container">
@@ -36,7 +38,15 @@ export default class Navbar extends React.Component {
                   </a>
                 </Link>
               </li>
-              {this.props.logged ? (
+              {!isAuthenticated ? (
+                <li className="nav-item">
+                  <Link href="/login">
+                    <a className="nav-link">
+                      <i className="fas fa-sign-in-alt" /> Login
+                    </a>
+                  </Link>
+                </li>
+              ) : (
                 <li className="nav-item">
                   <Link href="/auth/logout">
                     <a className="nav-link">
@@ -44,7 +54,7 @@ export default class Navbar extends React.Component {
                     </a>
                   </Link>
                 </li>
-              ) : null}
+              )}
             </ul>
           </div>
         </div>
@@ -52,3 +62,7 @@ export default class Navbar extends React.Component {
     );
   }
 }
+
+export default connect(store => ({
+  isAuthenticated: store.auth.isAuthenticated // store.user is the user reducer
+}))(Navbar);
