@@ -1,12 +1,14 @@
 import React from "react";
 import Link from "next/link";
 import { connect } from "react-redux";
+import MobileNavlink from "./MobileNavlink";
+import DesktopNavLink from "./DesktopNavLink";
 
 class Navbar extends React.Component {
   render() {
     const { isAuthenticated } = this.props;
     return (
-      <nav className="navbar navbar-expand-sm navbar-dark bg-danger mb-3 py-1">
+      <nav className="navbar navbar-expand-sm navbar-dark bg-danger mb-3 py-0">
         <div className="container">
           <Link href="/">
             <a className="navbar-brand">BRAND</a>
@@ -25,34 +27,46 @@ class Navbar extends React.Component {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
-                <Link prefetch href="/">
-                  <a className="nav-link">
-                    <i className="fas fa-home" /> Home
-                  </a>
-                </Link>
+                <MobileNavlink href="/" value="Home" className="fas fa-home" />
+                <DesktopNavLink href="/" value="Home" className="fas fa-home" />
               </li>
               <li className="nav-item">
-                <Link prefetch href="/about">
-                  <a className="nav-link">
-                    <i className="fas fa-info-circle" /> About
-                  </a>
-                </Link>
+                <MobileNavlink
+                  href="/about"
+                  value="About"
+                  className="fas fa-info-circle"
+                />
+                <DesktopNavLink
+                  href="/about"
+                  value="About"
+                  className="fas fa-info-circle"
+                />
               </li>
               {!isAuthenticated ? (
                 <li className="nav-item">
-                  <Link prefetch href="/login">
-                    <a className="nav-link">
-                      <i className="fas fa-sign-in-alt" /> Login
-                    </a>
-                  </Link>
+                  <MobileNavlink
+                    href="/login"
+                    value="Login"
+                    className="fas fa-sign-in-alt"
+                  />
+                  <DesktopNavLink
+                    href="/login"
+                    value="Login"
+                    className="fas fa-sign-in-alt"
+                  />
                 </li>
               ) : (
                 <li className="nav-item">
-                  <Link href="/auth/logout">
-                    <a className="nav-link">
-                      <i className="fas fa-sign-out-alt" /> Logout
-                    </a>
-                  </Link>
+                  <MobileNavlink
+                    href="/auth/logout"
+                    value="Logout"
+                    className="fas fa-sign-out-alt"
+                  />
+                  <DesktopNavLink
+                    href="/auth/logout"
+                    value="Logout"
+                    className="fas fa-sign-out-alt"
+                  />
                 </li>
               )}
             </ul>
