@@ -4,6 +4,7 @@ const app = next({ dev });
 const handle = app.getRequestHandler();
 const { MONGO_URI, SESSION_SECRET } = require("./server/config/keys");
 const PORT = process.env.PORT || 3000;
+const requireHTTPS = require("./utils/requireHTTPS");
 
 // Setup User Model
 require("./server/model/User");
@@ -51,7 +52,7 @@ const loadServer = () => {
   //   assert.ifError(error);
   //   assert.ok(false);
   // });
-
+  server.use(requireHTTPS);
   // Set Session Config
   server.use(
     session({
@@ -72,7 +73,7 @@ const loadServer = () => {
   server.use(cors());
 
   server.use(loadUser);
-  server.use(express.static(__dirname + "/node_modules"));
+  // server.use(express.static(__dirname + "/node_modules"));
   server.get("/", (req, res) => {
     app.render(req, res, "/");
   });

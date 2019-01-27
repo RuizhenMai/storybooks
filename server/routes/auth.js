@@ -19,6 +19,9 @@ router.get(
   // return a code for userinfo then call authenticate again
   // to exchange user profile and email from google
   // ③
+  // (req, res, next) => {
+  //   console.log(req.get("host") + req.originalUrl);
+  // },
   passport.authenticate("google"),
   // ⑤ the last call back
   // return a valid token
@@ -36,7 +39,7 @@ router.get(
     //     });
     //   }
     // );
-    res.redirect("/");
+    res.json({ success: "you have succeeded in signing in" });
   }
 );
 
