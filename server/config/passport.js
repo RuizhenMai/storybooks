@@ -106,7 +106,6 @@ passport.use(facebookStrategy);
 
 // 4.5
 passport.serializeUser(function(user, done) {
-  console.log(user.id);
   done(null, user.id);
 });
 

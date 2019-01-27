@@ -39,7 +39,7 @@ router.get(
     //     });
     //   }
     // );
-    res.json({ success: "you have succeeded in signing in" });
+    res.redirect("/");
   }
 );
 
