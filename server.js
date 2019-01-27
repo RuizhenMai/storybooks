@@ -52,7 +52,7 @@ const loadServer = () => {
   //   assert.ifError(error);
   //   assert.ok(false);
   // });
-  server.use(requireHTTPS);
+  // server.use(requireHTTPS);
   // Set Session Config
   server.use(
     session({
