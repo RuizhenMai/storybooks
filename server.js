@@ -4,8 +4,22 @@ const app = next({ dev });
 const handle = app.getRequestHandler();
 const { MONGO_URI, SESSION_SECRET } = require("./server/config/keys");
 const PORT = process.env.PORT || 3000;
-const requireHTTPS = require("./utils/requireHTTPS");
+const express = require("express");
+const server = express();
+const session = require("express-session");
+const TWO_HOUR = 1000 * 60 * 60 * 2;
 
+// Mongoose Connect
+const mongoose = require("mongoose");
+mongoose
+  .connect(
+    MONGO_URI,
+    {
+      useNewUrlParser: true
+    }
+  )
+  .then(() => console.log("> mLab MongoDB Connected"))
+  .catch(console.log);
 // Setup User Model
 require("./server/model/User");
 
@@ -17,46 +31,22 @@ require("./server/config/passport");
 const authRoutes = require("./server/routes/auth");
 
 const loadServer = () => {
-  const express = require("express");
-  const server = express();
-  const session = require("express-session");
-  // const MongoDBStore = require("connect-mongodb-session")(session);
-  const TWO_HOUR = 1000 * 60 * 60 * 2;
-  const cors = require("cors");
+  const MongoStore = require("connect-mongo")(session);
+  // const cors = require("cors");
   const { loadUser } = require("./server/middlewares/loadUser");
 
-  // Mongoose Connect
-  const mongoose = require("mongoose");
-  mongoose
-    .connect(
-      MONGO_URI,
-      {
-        useNewUrlParser: true
-      }
-    )
-    .then(() => console.log("> mLab MongoDB Connected"))
-    .catch(console.log);
-
   // Set Session store
-  // const store = new MongoDBStore(
-  //   {
-  //     uri: MONGO_URI,
-  //     collection: "sessions"
-  //   },
-  //   () => {
-  //     console.log("> MongoDB store connected");
-  //   }
-  // );
+  const store = new MongoStore({ mongooseConnection: mongoose.connection });
 
-  // store.on("error", function(error) {
-  //   assert.ifError(error);
-  //   assert.ok(false);
-  // });
-  // server.use(requireHTTPS);
+  store.on("error", function(error) {
+    assert.ifError(error);
+    assert.ok(false);
+  });
+
   // Set Session Config
   server.use(
     session({
-      // store: store,
+      store: store,
       secret: "secretsssss",
       rolling: false,
       resave: false,
@@ -70,7 +60,6 @@ const loadServer = () => {
 
   server.use(passport.initialize());
   server.use(passport.session());
-  server.use(cors());
 
   server.use(loadUser);
   // server.use(express.static(__dirname + "/node_modules"));
@@ -79,7 +68,6 @@ const loadServer = () => {
   });
 
   server.get("/about", (req, res) => {
-    // if (!req.user) return res.redirect("/");
     app.render(req, res, "/about");
   });
 
