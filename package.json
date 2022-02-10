@@ -27,7 +27,7 @@
     "mongoose": "^5.4.6",
     "next": "^7.0.2",
     "next-redux-wrapper": "^2.1.0",
-    "node-sass": "^4.11.0",
+    "node-sass": "^7.0.0",
     "passport": "^0.4.0",
     "passport-facebook": "^3.0.0",
     "passport-google-oauth": "^1.0.0",
